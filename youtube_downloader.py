@@ -3,6 +3,8 @@ from pytube import Playlist, YouTube
 import re
 import random
 
+CHOICES = ["v", "p", "e"]
+
 
 def progress_func(self, chunk=None, bytes_remaining=None, file_handle=None):
     """
@@ -63,10 +65,18 @@ def download_video(url=None, playlist_url=None):
             print("Video #{} downloaded".format(number))
 
 
-choice = input("Do you want to download a video or a playlist? v/p ")
+while True:
+    print("**If you want to exit the program type e**")
+    choice = input("Do you want to download a video or a playlist? v/p ")
+    if str(choice) not in CHOICES:
+        print("Please enter a valid choice, v for video, p for playlist and e to exit the program")
+    else:
+        break
 if str(choice) == "v":
     url = input("Enter the link of the video: ")
     download_video(url=url)
 elif str(choice) == "p":
     playlist_url = input("Enter the link of the playlist: ")
     download_video(playlist_url=playlist_url)
+elif str(choice) == "e":
+    pass
