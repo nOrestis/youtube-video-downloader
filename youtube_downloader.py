@@ -5,13 +5,28 @@ import random
 
 
 def progress_func(self, chunk=None, bytes_remaining=None, file_handle=None):
+    """
+        Retrieves the remaining bytes and calculates the percentage of the completion of the file
+
+        :param chunk:
+            Segment of media file binary data, not yet written to disk. [bytes]
+        :param file_handler:
+            The file handle where the media is being written to.
+        :param bytes_remaining:
+            The delta between the total file size in bytes and amount already
+            downloaded.[int]
+        """
     percent = (100 * (file_size - bytes_remaining)) / file_size
     print("{:00.0f}% downloaded".format(percent))
 
 
 def file_path():
+    """
+        Creates the path and the folder for our downloads.
+        A random name is given in every creation to avoid any conflicts
+    """
     home = os.path.expanduser("~")
-    # Create random names for each download folder to avoid existing directories creation
+    # Create random names for each download folder to avoid any conflicts
     new_folder = "Downloads/youtube_videos_%s" % str(random.randint(0, 1000))
     download_folder = os.path.join(home, new_folder)
     access_rights = 0o755
