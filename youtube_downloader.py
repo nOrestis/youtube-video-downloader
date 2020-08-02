@@ -5,7 +5,6 @@ import random
 
 
 # TODO create a progress bar
-# Do it into classes or functions
 def file_path():
     home = os.path.expanduser("~")
     # Create random names for each download folder to avoid existing directories creation
