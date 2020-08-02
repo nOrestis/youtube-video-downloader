@@ -4,7 +4,11 @@ import re
 import random
 
 
-# TODO create a progress bar
+def progress_func(self, chunk=None, bytes_remaining=None, file_handle=None):
+    percent = (100 * (file_size - bytes_remaining)) / file_size
+    print("{:00.0f}% downloaded".format(percent))
+
+
 def file_path():
     home = os.path.expanduser("~")
     # Create random names for each download folder to avoid existing directories creation
@@ -22,11 +26,12 @@ def file_path():
 
 def download_video(url=None, playlist_url=None):
     path = file_path()
+    global file_size
     if url:
-        yt_video = YouTube(url)  #
-        yt_video.streams.filter(progressive=True, file_extension="mp4").order_by(
-            "resolution"
-        )[-1].download(output_path=path)
+        yt_fetch = YouTube(url, on_progress_callback=progress_func)
+        yt_video = yt_fetch.streams.filter(progressive=True, file_extension="mp4").order_by("resolution")[-1]
+        file_size = yt_video.filesize
+        yt_video.download(output_path=path)
         print("Video downloaded succesfully")
     elif playlist_url:
         playlist = Playlist(playlist_url)
@@ -35,11 +40,11 @@ def download_video(url=None, playlist_url=None):
         amount_of_videos = len(playlist.video_urls)
         print("Number of videos in playlist: %s" % amount_of_videos)
         for video, number in zip(playlist, range(0, amount_of_videos)):
-            yt = YouTube(video)
-            numbered_title = str(number + 1) + ") " + yt.title
-            yt.streams.filter(progressive=True, file_extension="mp4").order_by(
-                "resolution"
-            )[-1].download(filename=numbered_title, output_path=path)
+            yt_fetch = YouTube(video, on_progress_callback=progress_func)
+            numbered_title = str(number + 1) + ") " + yt_fetch.title
+            yt_video = yt_fetch.streams.filter(progressive=True, file_extension="mp4").order_by("resolution")[-1]
+            file_size = yt_video.filesize
+            yt_video.download(filename=numbered_title, output_path=path)
             print("Video #{} downloaded".format(number))
 
 
