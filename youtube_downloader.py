@@ -17,7 +17,7 @@ def progress_func(self, chunk=None, bytes_remaining=None, file_handle=None):
         :param bytes_remaining:
             The delta between the total file size in bytes and amount already
             downloaded.[int]
-        """
+    """
     percent = (100 * (file_size - bytes_remaining)) / file_size
     print("{:00.0f}% downloaded".format(percent))
 

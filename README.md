@@ -1,5 +1,6 @@
 # youtube-video-downloader
-Youtube downloader script
+Youtube downloader script. This script can download a single song or a numbered playlist.
+
 
 Pytube DOC:
 https://python-pytube.readthedocs.io/en/latest/_modules/pytube/streams.html
